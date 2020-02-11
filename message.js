@@ -18,6 +18,12 @@ function get_push_msg(data) {
 function get_comment_msg(data) {
     let { action, comment, repository, sender } = data,
         name = sender.login
+    return `Commit comment ${action} by ${name}
+> **${comment.commit_id.substr(0, 7)}**
+> [${comment.body}](${comment.html_url})
+
+[**${repository.full_name}**](${repository.html_url})
+`
     return {
         title: repository.full_name,
         description: `${name} ${action} comment`,
@@ -31,7 +37,7 @@ function get_pr_msg(data) {
         pull_request_name = pull_request.url.substring(pull_request.url.indexOf('/pulls/') + 7)
     if (action === 'labeled') return
     if (action === 'closed') action = pull_request.merged ? 'merged' : 'unmerged'
-return `Pull request ${action} by ${name}
+    return `Pull request ${action} by ${name}
 > [**#${pull_request_name} ${pull_request.title}**](${pull_request.html_url})
 ${pull_request.body}
 
@@ -41,24 +47,33 @@ ${pull_request.body}
 
 
 function get_issue_comment_msg(data) {
-    let { action, issue, sender, repository } = data,
-        name = sender.login
-    return {
-        title: repository.full_name,
-        description: `${name} ${action} issue comment`,
-        action: issue.html_url
-    }
+    let { action, issue, sender, repository, comment } = data,
+        name = sender.login,
+        issue_name = issue.url.substring(issue.url.indexOf('/issues/') + 8)
+    return `
+issue comment ${action} by ${name}
+> 
+> [**#${issue_name} ${issue.title}**](${issue.html_url})
+> ${issue.body}
+
+> [**${comment.body}**](${comment.html_url})
+    
+[**${repository.full_name}**](${repository.html_url})
+`
 }
 
 function get_issues_msg(data) {
     let { action, issue, sender, repository } = data,
-        name = sender.login
-    return {
-        title: repository.full_name,
-        description: `${name} ${action} issues`,
-        action: issue.html_url
-    }
+        name = sender.login,
+        issue_name = issue.url.substring(issue.url.indexOf('/issues/') + 8)
+    return `
+issue ${action} by ${name}
+> 
+> [**#${issue_name} ${issue.title}**](${issue.html_url})
+> ${issue.body}
 
+[**${repository.full_name}**](${repository.html_url})
+`
 }
 
 function get_branch_or_tag_msg(data, method) {
@@ -69,14 +84,17 @@ ${method}d ${ref_type} [\`${ref}\`](${repository.html_url}/tree/${ref})
 [**${repository.full_name}**](${repository.html_url})
 `
 }
+
 function get_release_msg(data) {
     let { action, release, sender, repository } = data,
         name = sender.login
-    return {
-        title: repository.full_name,
-        description: `${name} ${action} release`,
-        action: release.html_url
-    }
+    return `
+release ${action} by ${name}
+> [**${release.name}**](${release.html_url})
+${release.tag_name && '> ' + release.tag_name || ''}
+
+[**${repository.full_name}**](${repository.html_url})
+`
 }
 
 
