@@ -4,17 +4,14 @@ function get_push_msg(data) {
     let name = sender.login
     let count = commits.length
     if (count === 0) return
-    let head = `## ${name}
-#### [**${count} new commit**](${commits[commits.length - 1].url}) pushed to [**${ref}**](${repository.html_url}/tree/${ref})`
+    let head = `**${name}**
+ [**${count} new commit**](${commits[0].url}) **pushed to** [**${ref}**](${repository.html_url}/tree/${ref})\n`
     let middle = ''
     for (let i = 0; i < count; i++) {
         let { id, url, message } = commits[i]
-        middle += `
-> [**${id.substr(0, 8)}**](${url}) - ${message}
-`
+        middle += `> [**${id.substr(0, 7)}**](${url}) - ${message}\n`
     }
-
-    let footer = `[**${repository.full_name}**](${repository.html_url})`
+    let footer = `\n[**${repository.full_name}**](${repository.html_url})`
     return head + middle + footer
 }
 
@@ -34,11 +31,12 @@ function get_pr_msg(data) {
         pull_request_name = pull_request.url.substring(pull_request.url.indexOf('/pulls/') + 7)
     if (action === 'labeled') return
     if (action === 'closed') action = pull_request.merged ? 'merged' : 'unmerged'
-    return {
-        title: repository.full_name,
-        description: `${name} ${action} PR#${pull_request_name}`,
-        action: pull_request.html_url
-    }
+return `Pull request ${action} by ${name}
+> [**#${pull_request_name} ${pull_request.title}**](${pull_request.html_url})
+${pull_request.body}
+
+[**${repository.full_name}**](${repository.html_url})
+`
 }
 
 
@@ -63,24 +61,13 @@ function get_issues_msg(data) {
 
 }
 
-function get_create_branch_or_tag_msg(data) {
-    let { sender, ref, ref_type, repository } = data,
-        name = sender.login
-    return {
-        title: repository.full_name,
-        description: `${name} create ${ref_type} #${ref}`,
-        action: repository.html_url
-    }
-}
-
-function get_delete_branch_or_tag_msg(data) {
-    let { sender, ref, ref_type, repository } = data,
-        name = sender.login
-    return {
-        title: repository.full_name,
-        description: `${name} delete ${ref_type} #${ref}`,
-        action: repository.html_url
-    }
+function get_branch_or_tag_msg(data, method) {
+    let { sender, ref, ref_type, repository } = data
+    return `
+**${sender.login}**
+${method}d ${ref_type} [\`${ref}\`](${repository.html_url}/tree/${ref})
+[**${repository.full_name}**](${repository.html_url})
+`
 }
 function get_release_msg(data) {
     let { action, release, sender, repository } = data,
@@ -108,9 +95,8 @@ function get_message_transfer(data, type) {
         case 'issues':
             return get_issues_msg(data)
         case 'create':
-            return get_create_branch_or_tag_msg(data)
         case 'delete':
-            return get_delete_branch_or_tag_msg(data)
+            return get_branch_or_tag_msg(data, type)
         case 'release':
             return get_release_msg(data)
         default:
