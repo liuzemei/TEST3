@@ -15,6 +15,8 @@ let recipient_id = 'e8e8cd79-cd40-4796-8c54-3a13cfe50115'
 let data = func()
 
 
+
+
 client.send_message({
     recipient_id, data, category: 'PLAIN_POST'
 })
