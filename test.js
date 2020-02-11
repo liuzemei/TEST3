@@ -1,5 +1,6 @@
 const { Mixin } = require('mixin-node-sdk')
 
+const func = require('./message')
 let client = new Mixin({
     "client_id": "c26ec48e-d626-4106-9f30-ff6a69783369",
     "client_secret": '52e02740d0ec12ff179c618adad70150647bd802aebd0a6a1e2c344fb9fa4ce0',
@@ -11,13 +12,7 @@ let client = new Mixin({
 
 
 let recipient_id = 'e8e8cd79-cd40-4796-8c54-3a13cfe50115'
-let data = `
-## liuzemei
-#### [**1 new commit**](https://github.com/liuzemei/test3/commit/cf03469aec7b8cfd9b00c11a76b137adb97cfee7) pushed to [**master**](https://github.com/liuzemei/test3)
-> [**cf03469a**](https://github.com/liuzemei/test3/commit/cf03469aec7b8cfd9b00c11a76b137adb97cfee7) - tainxiexiajif
-
-[**liuzemei/test3**](https://github.com/liuzemei/test3)
-`
+let data = func()
 client.send_message({
     recipient_id, data, category: 'PLAIN_POST'
 })
