@@ -1,6 +1,5 @@
 const { Mixin } = require('mixin-node-sdk')
 
-
 const func = require('./message')
 let client = new Mixin({
     "client_id": "c26ec48e-d626-4106-9f30-ff6a69783369",
