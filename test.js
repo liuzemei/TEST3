@@ -170,6 +170,60 @@ let data = func({
       "modified": [
         "test.js"
       ]
+    },
+    {
+      "id": "07e63b4d3ed9bec629159391cad807b19cb8147e",
+      "tree_id": "81f8d8c099c8c81480ecf0454b3ef2985e480e58",
+      "distinct": true,
+      "message": "1",
+      "timestamp": "2020-02-11T20:25:29+08:00",
+      "url": "https://github.com/liuzemei/TEST3/commit/07e63b4d3ed9bec629159391cad807b19cb8147e",
+      "author": {
+        "name": "liuzemei",
+        "email": "her_liu@qq.com",
+        "username": "liuzemei"
+      },
+      "committer": {
+        "name": "liuzemei",
+        "email": "her_liu@qq.com",
+        "username": "liuzemei"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "test.js"
+      ]
+    },
+    {
+      "id": "07e63b4d3ed9bec629159391cad807b19cb8147e",
+      "tree_id": "81f8d8c099c8c81480ecf0454b3ef2985e480e58",
+      "distinct": true,
+      "message": "1",
+      "timestamp": "2020-02-11T20:25:29+08:00",
+      "url": "https://github.com/liuzemei/TEST3/commit/07e63b4d3ed9bec629159391cad807b19cb8147e",
+      "author": {
+        "name": "liuzemei",
+        "email": "her_liu@qq.com",
+        "username": "liuzemei"
+      },
+      "committer": {
+        "name": "liuzemei",
+        "email": "her_liu@qq.com",
+        "username": "liuzemei"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        "test.js"
+      ]
     }
   ],
   "head_commit": {
@@ -206,6 +260,6 @@ console.log(data)
 
 
 
-client.send_message({
-    recipient_id, data, category: 'PLAIN_POST'
-})
+// client.send_message({
+//     recipient_id, data, category: 'PLAIN_POST'
+// })

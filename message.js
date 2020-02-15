@@ -1,17 +1,18 @@
+
 function get_push_msg(data) {
     let { sender, commits, repository, ref } = data
     ref = ref.substr(11)
     let name = sender.login
     let count = commits.length
     if (count === 0) return
-    let head = `![avatar](${sender.avatar_url}&s=13) **${name}**
+    let head = `**${name}**
  [**${count} new commit**](${commits[0].url}) **pushed to** [**${ref}**](${repository.html_url}/tree/${ref})\n`
     let middle = ''
     for (let i = 0; i < count; i++) {
         let { id, url, message } = commits[i]
         middle += `> [**${id.substr(0, 7)}**](${url}) - ${message}\n`
     }
-    let footer = `\n![avatar1](http://taskwall.zeromesh.net/github.png) [**${repository.full_name}**](${repository.html_url})`
+    let footer = `\n[**${repository.full_name}**](${repository.html_url})`
     return head + middle + footer
 }
 
