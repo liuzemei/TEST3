@@ -10,6 +10,7 @@ function get_push_msg(data) {
     let middle = ''
     for (let i = 0; i < count; i++) {
         let { id, url, message } = commits[i]
+        message = message.replace('\n', '\n > ')
         middle += `> [**${id.substr(0, 7)}**](${url}) - ${message}\n`
     }
     let footer = `\n[**${repository.full_name}**](${repository.html_url})`
