@@ -1,7 +1,6 @@
 
 
 
-
 function get_push_msg(data) {
     let { sender, commits, repository, ref } = data
     ref = ref.substr(11)
